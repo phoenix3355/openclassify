@@ -404,57 +404,95 @@
         'min-h-screen' => $demoLandingMode,
     ])>@yield('content')</main>
     @if(!$simplePage && ! $demoLandingMode)
-    <footer class="mt-10 md:mt-14 bg-slate-100 text-slate-600 border-t border-slate-200" data-anim-footer>
-        <div class="max-w-[1320px] mx-auto px-4 py-8 md:py-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
-                <div data-anim-footer-item>
-                    <h3 class="text-slate-900 font-semibold text-lg mb-3">{{ $siteName }}</h3>
-                    <p class="text-sm text-slate-500 leading-relaxed">{{ $siteDescription }}</p>
+    <footer class="mt-10 md:mt-14 border-t border-[#e0d8cc] bg-white pb-20 md:pb-8 pt-14" data-anim-footer>
+        <div class="max-w-7xl mx-auto px-4 md:px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
+                <div class="col-span-2 lg:col-span-2" data-anim-footer-item>
+                    <div class="text-2xl font-black tracking-tight mb-5">
+                        {{ $siteName }}<span class="text-[#D4440C]">.</span>
+                    </div>
+                    <p class="text-sm leading-relaxed text-[#8e8272] max-w-xs">{{ $siteDescription }}</p>
                 </div>
+
                 <div data-anim-footer-item>
-                    <h4 class="text-slate-900 font-medium mb-4">Quick Links</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="{{ route('home') }}" class="hover:text-slate-900 transition">Home</a></li>
-                        <li><a href="{{ route('categories.index') }}" class="hover:text-slate-900 transition">Categories</a></li>
-                        <li><a href="{{ route('listings.index') }}" class="hover:text-slate-900 transition">All Listings</a></li>
+                    <h4 class="font-bold text-xs uppercase tracking-[0.18em] mb-5 text-[#D4440C]">Marketplace</h4>
+                    <ul class="space-y-3 text-sm text-[#8e8272] font-medium">
+                        <li><a href="{{ route('home') }}" class="hover:text-[#1A1714] transition">Home</a></li>
+                        <li><a href="{{ route('categories.index') }}" class="hover:text-[#1A1714] transition">Categories</a></li>
+                        <li><a href="{{ route('listings.index') }}" class="hover:text-[#1A1714] transition">All Listings</a></li>
                     </ul>
                 </div>
+
                 <div data-anim-footer-item>
-                    <h4 class="text-slate-900 font-medium mb-4">Account</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="{{ $loginRoute }}" class="hover:text-slate-900 transition">{{ __('messages.login') }}</a></li>
-                        <li><a href="{{ $registerRoute }}" class="hover:text-slate-900 transition">{{ __('messages.register') }}</a></li>
+                    <h4 class="font-bold text-xs uppercase tracking-[0.18em] mb-5 text-[#D4440C]">Account</h4>
+                    <ul class="space-y-3 text-sm text-[#8e8272] font-medium">
+                        @auth
+                        <li><a href="{{ $panelListingsRoute }}" class="hover:text-[#1A1714] transition">My Listings</a></li>
+                        <li><a href="{{ $favoritesRoute }}" class="hover:text-[#1A1714] transition">Favorites</a></li>
+                        <li><a href="{{ $profileRoute }}" class="hover:text-[#1A1714] transition">Profile</a></li>
+                        @else
+                        <li><a href="{{ $loginRoute }}" class="hover:text-[#1A1714] transition">{{ __('messages.login') }}</a></li>
+                        <li><a href="{{ $registerRoute }}" class="hover:text-[#1A1714] transition">{{ __('messages.register') }}</a></li>
+                        @endauth
                     </ul>
                 </div>
+
                 <div data-anim-footer-item>
-                    <h4 class="text-slate-900 font-medium mb-4">Links</h4>
-                    <ul class="space-y-2 text-sm mb-3 md:mb-4">
+                    <h4 class="font-bold text-xs uppercase tracking-[0.18em] mb-5 text-[#D4440C]">Connect</h4>
+                    <ul class="space-y-3 text-sm text-[#8e8272] font-medium">
                         @if($linkedinUrl)
-                        <li><a href="{{ $linkedinUrl }}" target="_blank" rel="noopener" class="hover:text-slate-900 transition">LinkedIn</a></li>
+                        <li><a href="{{ $linkedinUrl }}" target="_blank" rel="noopener" class="hover:text-[#1A1714] transition">LinkedIn</a></li>
                         @endif
                         @if($instagramUrl)
-                        <li><a href="{{ $instagramUrl }}" target="_blank" rel="noopener" class="hover:text-slate-900 transition">Instagram</a></li>
+                        <li><a href="{{ $instagramUrl }}" target="_blank" rel="noopener" class="hover:text-[#1A1714] transition">Instagram</a></li>
                         @endif
                         @if($whatsappUrl)
-                        <li><a href="{{ $whatsappUrl }}" target="_blank" rel="noopener" class="hover:text-slate-900 transition">WhatsApp</a></li>
+                        <li><a href="{{ $whatsappUrl }}" target="_blank" rel="noopener" class="hover:text-[#1A1714] transition">WhatsApp</a></li>
                         @endif
                         @if(!$linkedinUrl && !$instagramUrl && !$whatsappUrl)
-                        <li>No social links added yet.</li>
+                        <li>No social links</li>
                         @endif
                     </ul>
-                    <h4 class="text-slate-900 font-medium mb-3">Languages</h4>
-                    <div class="flex flex-wrap gap-2">
+                    <div class="mt-5 flex flex-wrap gap-2">
                         @foreach($availableLocales as $locale)
-                        <a href="{{ route('lang.switch', $locale) }}" class="text-xs {{ app()->getLocale() === $locale ? 'text-slate-900' : 'hover:text-slate-900' }} transition">{{ strtoupper($locale) }}</a>
+                        <a href="{{ route('lang.switch', $locale) }}" class="text-xs font-bold {{ app()->getLocale() === $locale ? 'text-[#1A1714]' : 'text-[#8e8272] hover:text-[#1A1714]' }} transition">{{ strtoupper($locale) }}</a>
                         @endforeach
                     </div>
                 </div>
             </div>
-            <div class="border-t border-slate-300 mt-6 md:mt-8 pt-6 md:pt-8 text-center text-sm text-slate-500">
-                <p>© {{ date('Y') }} {{ $siteName }}. All rights reserved.</p>
+
+            <div class="pt-7 border-t border-[#f2ede4] flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold text-[#8e8272] uppercase tracking-[0.14em]">
+                <div>© {{ date('Y') }} {{ $siteName }}. All rights reserved.</div>
+                <div class="flex gap-6">
+                    <span class="hover:text-[#1A1714] cursor-default">Facebook</span>
+                    <span class="hover:text-[#1A1714] cursor-default">Instagram</span>
+                    <span class="hover:text-[#1A1714] cursor-default">LinkedIn</span>
+                </div>
             </div>
         </div>
     </footer>
+
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-[#e0d8cc] bg-white px-4 py-3 flex items-center justify-between shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
+        <a href="{{ route('listings.index') }}" class="flex flex-col items-center gap-1 text-[#D4440C]">
+            <span class="text-lg leading-none">⌕</span>
+            <span class="text-[10px] font-bold">Search</span>
+        </a>
+        <a href="{{ $favoritesRoute }}" class="flex flex-col items-center gap-1 text-[#8e8272]">
+            <span class="text-lg leading-none">♡</span>
+            <span class="text-[10px] font-bold">Saved</span>
+        </a>
+        <a href="{{ $panelCreateRoute }}" class="-mt-8 rounded-2xl bg-[#1A1714] text-white p-3 shadow-lg shadow-black/20" aria-label="Post listing">
+            <span class="text-xl leading-none">＋</span>
+        </a>
+        <a href="{{ $panelListingsRoute }}" class="flex flex-col items-center gap-1 text-[#8e8272]">
+            <span class="text-lg leading-none">▦</span>
+            <span class="text-[10px] font-bold">My</span>
+        </a>
+        <a href="{{ $profileRoute }}" class="flex flex-col items-center gap-1 text-[#8e8272]">
+            <span class="text-lg leading-none">◯</span>
+            <span class="text-[10px] font-bold">Profile</span>
+        </a>
+    </nav>
     @endif
     @livewireScripts
     <script>
